@@ -1,0 +1,6 @@
+Team members:
+Marcus Mao, Atharva Pendse
+
+
+What will you do?
+We will be working on an optimized and parallelized implementation for matrix multiplication. If we get time, we will also try to implement the Strassen algorithm, which is able to multiply matrices in n^(log 7) time compared to the n^(log 8) = n^3 naive implementation.
