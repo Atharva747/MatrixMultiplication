@@ -1,16 +1,41 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<thread>
 
 using namespace std;
 
+int n,k,m;
+vector<int> a;
+vector<int> b;
+vector<vector<int> > c;
+
+/*
+void clac(int j) {
+
+}*/
+
+
+void calc(int i) {
+	if(i<n) {
+		int numthreads = 5;
+		for(int j = 0; j<m; j+=1) {
+				int entry = 0;
+				for(int y = 0; y<k; y++) {
+						entry+=(a[i*k + y]*b[y*m + j]);
+				}
+				c[i][j] = entry;
+		}
+	}
+	return;
+}
+
 int main() {
 		ios_base::sync_with_stdio(false);
-		int n,k,m;
 		cin>>n>>k>>m;
-		vector<int> a(n*k);
-		vector<int> b(k*m);
-		vector<vector<int> > c(n, vector<int> (m));
+		a.assign(n*k,0);
+		b.assign(k*m,0);
+		c.assign(n, vector<int> (m,0));
 
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<k; j++) {
@@ -23,15 +48,19 @@ int main() {
 				}
 		}
 
-		for(int i = 0; i<n; i++) {
-				for(int j = 0; j<m; j++) {
-						int entry = 0;
-						for(int y = 0; y<k; y++) {
-								entry+=(a[i*k + y]*b[y*m + j]);
-						}
-						c[i][j] = entry;
+		int numthreads = 1000;
+
+		std::thread threads[numthreads];
+		for(int i = 0; i<n; i+=numthreads) {
+				for(int index = 0; index<numthreads; index++) {
+						threads[index] = std::thread(calc,i+index);
+				}
+				for(int index = 0; index<numthreads; index++) {
+						threads[index].join();
 				}
 		}
+
+
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<m; j++) {
 						cout<<c[i][j]<<"\t";
