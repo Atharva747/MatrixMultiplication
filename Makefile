@@ -1,10 +1,7 @@
 all : parallelized
 
-parallelized : parallelized.o
-	g++ parallelized.o -o parallelized
-
-parallelized.o : parallelized.cpp
-	g++ -c parallelized.cpp
+parallelized : parallelized.cpp
+	g++ -std=c++11 -pthread parallelized.cpp -o parallelized
 
 TESTS=$(sort $(wildcard *.test))
 RUNS=$(patsubst %.test,%.result,$(TESTS))
