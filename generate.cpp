@@ -7,20 +7,21 @@
 using namespace std;
 
 int main() {
-		int n = 1000;
+		int n,k,m;
+        cin>>n>>k>>m;
 		srand(time(0));
 		int r = 0;
-		cout<<n<<" "<<n<<" "<<n<<endl;
-		for(int j = 0; j<1000; j++) {
-			for(int i = 0; i< 1000; i++) {
+		cout<<n<<" "<<k<<" "<<m<<endl;
+		for(int j = 0; j<n; j++) {
+			for(int i = 0; i<k; i++) {
 					r = (rand()%10000) + 1;
 					cout<<r<<" ";
 			}
 			cout<<endl;
 		}
 
-		for(int j = 0; j<1000; j++) {
-			for(int i = 0; i< 1000; i++) {
+		for(int j = 0; j<k; j++) {
+			for(int i = 0; i<m; i++) {
 					r = (rand()%10) + 1;
 					cout<<r<<" ";
 			}
