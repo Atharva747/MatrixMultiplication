@@ -14,7 +14,7 @@ int main() {
 		cout<<n<<endl;
 		for(int j = 0; j<n; j++) {
 			for(int i = 0; i<n; i++) {
-					r = (rand()%100) + 1;
+					r = (rand()%10) - 5;
 					cout<<r<<" ";
 			}
 			cout<<endl;
