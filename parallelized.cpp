@@ -30,13 +30,11 @@ int main() {
 		a.assign(n*k,0);
 		b.assign(k*m,0);
 		c.assign(n*m,0);
-#pragma omp parallel for //faster inputs
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<k; j++) {
 						cin>>a[i*k + j];
 				}
 		}
-#pragma omp parallel for //faster inputs
 		for(int i = 0; i<k; i++) {
 				for(int j = 0; j<m; j++) {
 						cin>>b[i*m + j];

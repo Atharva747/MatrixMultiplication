@@ -1,5 +1,8 @@
 all : parallelized
 
+naive : naive.cpp
+	g++ naive.cpp -o naive
+
 parallelized : parallelized.cpp
 	g++ -std=c++11 -pthread parallelized.cpp -o parallelized
 
@@ -8,7 +11,7 @@ RUNS=$(patsubst %.test,%.result,$(TESTS))
 
 test : $(RUNS)
 
-$(RUNS) : %.result : %.test Makefile parallelized
+$(RUNS) : %.result : %.test Makefile naive parallelized
 	@echo -n "[$*] \n\nnaive: \n"
 	@time ./naive < $*.test > n.out
 	@echo -n "\nparallelized: \n"
@@ -21,6 +24,7 @@ clean :
 	rm -f *.out
 	rm -f *.d
 	rm -f *.o
+	rm -f naive
 	rm -f parallelized
 
 -include *.d
