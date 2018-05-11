@@ -12,17 +12,19 @@ int main() {
 		vector<int> b(k*m);
 		vector<vector<int> > c(n, vector<int> (m));
 
+#pragma omp parallel for
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<k; j++) {
 						cin>>a[i*k + j];
 				}
 		}
+#pragma omp parallel for
 		for(int i = 0; i<k; i++) {
 				for(int j = 0; j<m; j++) {
 						cin>>b[i*m + j];
 				}
 		}
-
+#pragma omp parallel for
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<m; j++) {
 						int entry = 0;

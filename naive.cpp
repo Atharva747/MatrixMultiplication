@@ -11,17 +11,19 @@ int main() {
 		vector<vector<int> > a(n,vector<int>(k));
 		vector<vector<int> > b(k,vector<int>(m));
 		vector<vector<int> > c(n,vector<int>(m));
-
+//#pragma omp parallel for
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<k; j++) {
 						cin>>a[i][j];
 				}
 		}
+//#pragma omp parallel for
 		for(int i = 0; i<k; i++) {
 				for(int j = 0; j<m; j++) {
 						cin>>b[i][j];
 				}
 		}
+//#pragma omp parallel for
 		for(int i = 0; i<n; i++) {
 				for(int j = 0; j<m; j++) {
 						int entry = 0;
