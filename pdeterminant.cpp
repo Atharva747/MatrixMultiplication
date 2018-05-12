@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<math.h>
 //#include<thread>
 
 using namespace std;
@@ -11,14 +12,13 @@ vector<long double> a;
 void subrow(int row1, int row2) {
 
 		double coef = a[row1*n+row2]/a[row2*n+row2];
-#pragma omp parallel for
 		for(int i = 0; i<n; i++) {
 				a[row1*n+i]-=(coef*a[row2*n+i]);
 		}
 }
 
 void swaprow(int row1, int row2) {
-#pragma omp parallel for
+
 		for(int i = 0; i<n; i++) {
 				double temp = a[row1*n+i];
 				a[row1*n+i] = a[row2*n+i];
@@ -26,11 +26,22 @@ void swaprow(int row1, int row2) {
 		}
 }
 
+void elimparallel(int ij, int cur) {
+		if(ij<n&&ij!=cur&&a[ij*n+cur]!=0) {
+				subrow(ij, cur);
+		}
+
+}
+
 void elim(int cur) {
+
+#pragma omp parallel for
 		for(int i = 0; i<n; i++) {
+
 				if(i!=cur&&a[i*n+cur]!=0) {
 						subrow(i, cur);
 				}
+
 		}
 }
 
@@ -57,6 +68,10 @@ int main() {
 
 		//row and column number is i
 		double det = 1;
+
+		//int numthreads = 10;
+
+		//std::thread threads[numthreads];
 		for(int i = 0; i<n; i++) {
 				if(a[i*n+i]!=0) {
 						elim(i);
@@ -69,7 +84,8 @@ int main() {
 						cout<<0;
 						exit(0);
 				}
-				det=det*a[i*n+i];
+				det=det*fabs(a[i*n+i]);
+				det = fmod(det, 1000000007);
 		}
 /*
 		for(int i = 0; i<n; i++) {
@@ -80,4 +96,3 @@ int main() {
 		}*/
 		cout<<det;
 }
-

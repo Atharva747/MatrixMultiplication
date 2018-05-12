@@ -10,7 +10,7 @@ ndeterminant : ndeterminant.cpp
 	g++ ndeterminant.cpp -o ndeterminant
 
 pdeterminant : pdeterminant.cpp
-	g++ -std=c++11 -pthread pdeterminant.cpp -o pdeterminant
+	g++ pdeterminant.cpp -o pdeterminant -fopenmp
 
 MTESTS=$(sort $(wildcard *.mtest))
 MRUNS=$(patsubst %.mtest,%.mresult,$(MTESTS))

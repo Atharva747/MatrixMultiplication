@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<math.h>
 //#include<thread>
 
 using namespace std;
@@ -67,7 +68,8 @@ int main() {
 						cout<<0;
 						exit(0);
 				}
-				det=det*a[i*n+i];
+				det=det*fabs(a[i*n+i]);
+				det = fmod(det, 1000000007);
 		}
 /*
 		for(int i = 0; i<n; i++) {
