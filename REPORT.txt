@@ -1,14 +1,89 @@
 What did you propose?
 
+    We proposed that we would optimize matrix multiplication by parallelizing
+the calculations and possibly by using Strassen's algorithm.
 
 what did you do?
 
+    We attempted to optimize both matrix multiplication and finding the
+determinant of matrices. To optimize these problems, we unrolled the matrices
+into one-dimensional arrays to make the algorithms more cache-friendly, used
+Gaussian reduction instead of a naive method for finding determinants, and
+parallelized the calculations in each program. Specifically, we multithreaded
+matrix multiplication by making a thread for each row in the first matrix's
+calculations, and multithreaded determinant calculation by making a thread for
+each row when we check if certain matrix elements are zero and zero them out.
+
+    We also wrote a custom Makefile that compiled the naive and parallelized
+implementations for both multiplication and finding determinants. The Makefile
+would then run tests for each of them, with multiplication tests having the
+extensions .mtest and .mok, and with determinant tests having the extensions
+.dtest and .dok. For each test, the Makefile first runs the naive
+implementation, then runs the parallelized implementation, and then outputs
+times for each one. Our comparisons are based on the elapsed time, which
+represents how much time actually passed on the system clock.
+
+    To run the Makefile, use "make clean" to clear results, "make test" to run
+all tests, "make testname.mresult" to run a specific multiplication test, or
+"make testname.dresult" to run a specific determinant test. 
 
 What worked?
 
+    Multithreading matrix multiplication worked very well. The time required to
+multiply two 1000x1000 matrices went down from around 12 seconds for the naive
+implementation to around 1.5 seconds for the parallelized implementation (when
+run on skipper).
+
+    Guassian reduction is a massive improvement on a true naive implementation
+of deterrminant calculation. The algorithm goes from taking factorial time to
+taking O(n^3) time. However, we were unable to make specific comparisons to a
+completely naive implementation, for reasons outlined in the next section.
+
+    Finally, multithreading determinant calculation was also a significant
+improvement over standard Gaussian reduction for large test cases. The time
+required for a naive Gaussian reduction algorithm to find the determinant of a
+1000x1000 matrix was around 13.6 seconds, while our parallelized algorithm only
+took about 1.7 seconds.
 
 What didn't work?
 
+    First, we elected not to use Strassen's algorithm for our multiplication
+after all. The reason for this was that while Strassen's algorithm is slightly
+better in terms of big O complexity, in practice it would actually take longer
+unless we multiplied extremely large matrices. In order to have our tests take
+a reasonable amount of time, we kept the matrices relatively small, so in our
+case Strassen's algorithm would not have been worthwhile.
+
+    Next, determinants caused several problems. For starters, our "naive"
+implementation of finding determinants actually still uses Gaussian reduction.
+This is because a true naive implementation that manually calculates the
+determinants of every submatrix is too inefficient to work on any matrix sizes
+above around 20. Such sizes are trivial for even a naive Gaussian reduction-
+based algorithm, so we decided to make the naive implementation also use
+Gaussian reduction in order to allow for harder tests.
+
+    In addition, we had to mod our solutions for determinants by 1000000007.
+This was because otherwise, for large matrices the determinants were so large
+that overflow became a major issue. By modding at each step, we were able to get
+verifiable solutions while still being able to run large tests.
+
+    Also, we had to use the OpenMP library for our determinant program instead
+of making our own threads. We had hoped to avoid this, since making the threads
+manually would be more instructive, but when we tried to do that, our creation
+methods caused much more overhead and so our parallelization attempt did not
+save much time. We were unable to figure out how to fix the issue, and decided
+to use OpenMP for that part, since it resolved the issues.
+
+    Finally, for small test cases like t0.dtest, a 2x2 matrix, the parallelized
+determinant algorithm took longer than the naive algortihm. This is because for
+such a small matrix, there were very few calculations to do in each thread, so
+the overhead became more costly than the time saved by parallelizing.
 
 What did you learn?
 
+    Neither of us knew how to parallelize programs before this project, so both
+of us learned a lot about how to use threads and write parallelized programs.
+We also learned when not to use parallelization, such as when the overhead ends
+up being more expensive than the time saved and when the code is order-
+dependent. Lastly, we learned more about matrices, such as how Strassen's
+algorithm works and how to implement Gaussian reduction.
