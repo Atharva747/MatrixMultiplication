@@ -1,2 +1,3 @@
 member             relative contribution
-
+Atharva Pendse          50%
+Marcus Mao              50%
