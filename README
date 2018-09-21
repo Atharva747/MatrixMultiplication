@@ -1,7 +1,5 @@
-- Propose something. Submit proposal (PROPOSAL.txt) by 4/27/2018 @ 11:59pm
-
-- Do it (make sure you add, commit and push your code)
-
-- Report relative contribution of each team member (WORK.txt)
-
-- Finish the report (REPORT.txt) by 4/34/2018 (modulo arithmetic)  @ 11:59pm
+# Neo
+## Parallelized matrix operations library
+- Utilizes multiple cores in the cpu using threads in C
+- Uses Strassen's algorithm to bring runtime for matrix multiplication down from O(n^3) to O(n^log(7))
+- Also parallizes determinant operation modulo 1000000007.
