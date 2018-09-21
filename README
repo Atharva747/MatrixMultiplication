@@ -1,5 +1,0 @@
-# Neo
-## Parallelized matrix operations library
-- Utilizes multiple cores in the cpu using threads in C
-- Uses Strassen's algorithm to bring runtime for matrix multiplication down from O(n^3) to O(n^log(7))
-- Also parallizes determinant operation modulo 1000000007.
